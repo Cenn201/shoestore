@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('login', [AuthController::class, 'index'])->name('index');
+Route::group(['prefix' => 'customer'], function () {
+    Route::post('login-request', [AuthController::class, 'login'])->name('login.customer');
+    Route::post('signin-request', [AuthController::class, 'signup'])->name('signup.customer');
+    Route::get('Home', [HomeController::class, 'index'])->name('customer.home');
 });
